@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.audiorecorder.recorder.MainActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"
+        />
+
+
+    <Button
+        android:id="@+id/opnemen"
+        android:layout_width="348dp"
+        android:layout_height="53dp"
+        android:layout_alignLeft="@+id/stoppen"
+        android:layout_alignStart="@+id/stoppen"
+        android:layout_below="@+id/logo"
+        android:layout_marginTop="14dp"
+        android:text="Opnemen"
+        android:textSize="30dp" />
+
+    <Button
+        android:id="@+id/stoppen"
+        android:layout_width="348dp"
+        android:layout_height="53dp"
+        android:layout_alignLeft="@+id/afspelen"
+        android:layout_alignStart="@+id/afspelen"
+        android:layout_below="@+id/opnemen"
+        android:layout_marginTop="32dp"
+        android:text="Stoppen"
+        android:textSize="30dp" />
+
+
+    <Button
+        android:id="@+id/afspelen"
+        android:layout_width="348dp"
+        android:layout_height="53dp"
+        android:layout_below="@+id/stoppen"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"
+        android:text="Afspelen"
+        android:textSize="30dp" />
+
+
+
+</RelativeLayout>
