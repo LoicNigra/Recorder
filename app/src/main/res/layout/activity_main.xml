@@ -8,12 +8,11 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="230dp"
+        android:layout_height="230dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/logo"
-        />
+        android:src="@drawable/logo" />
 
 
     <Button
@@ -23,7 +22,8 @@
         android:layout_alignLeft="@+id/stoppen"
         android:layout_alignStart="@+id/stoppen"
         android:layout_below="@+id/logo"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="12dp"
+        android:onClick="Klik"
         android:text="Opnemen"
         android:textSize="30dp" />
 
@@ -34,7 +34,8 @@
         android:layout_alignLeft="@+id/afspelen"
         android:layout_alignStart="@+id/afspelen"
         android:layout_below="@+id/opnemen"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
+        android:onClick="Klik"
         android:text="Stoppen"
         android:textSize="30dp" />
 
@@ -43,12 +44,24 @@
         android:id="@+id/afspelen"
         android:layout_width="348dp"
         android:layout_height="53dp"
+
         android:layout_below="@+id/stoppen"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="14dp"
+        android:onClick="Klik"
         android:text="Afspelen"
         android:textSize="30dp" />
 
+    <Button
+        android:id="@+id/stopAfspelen"
+        android:layout_width="348dp"
+        android:layout_height="53dp"
 
+        android:layout_below="@+id/afspelen"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:onClick="Klik"
+        android:text="Stop Afspelen"
+        android:textSize="30dp" />
 
 </RelativeLayout>
