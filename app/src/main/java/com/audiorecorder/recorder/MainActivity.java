@@ -16,7 +16,8 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,11 +25,13 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private MediaRecorder mediaRecorder;
     private String outputfile;
+    private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Permissies();
 
         // Wordt uiteindelijk mounted/recorders.3gpp
         outputfile = Environment.getExternalStorageState()+"/recorders.3gpp";
@@ -38,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         switch(view.getId()){
             case R.id.opnemen:
                 try{
-                    CheckPermissie();
                     Opnemen();
                 }catch (Exception e){
                 //    Toast.makeText(getApplicationContext(), "Er is een probleem opgetreden met het opnemen", Toast.LENGTH_LONG).show();
@@ -55,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.afspelen:
                 try{
-                    CheckPermissie();
                     Afspelen();
                 }catch (Exception e) {
                   //  Toast.makeText(getApplicationContext(), "Er is een probleem opgetreden het afspelen", Toast.LENGTH_LONG).show();
@@ -154,21 +155,85 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private boolean CheckPermissie() {
+
+    /* ALLES ZIT IN FUNCTIE Permissies!
+
+    private boolean CheckPermissieWrite() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED
-                && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                        == PackageManager.PERMISSION_GRANTED) {
+                ) {
                 return true;
             } else {
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE }, 1);
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE }, 1);
                 return false;
             }
         } else {
             return true;
         }
+    }
+
+
+    private boolean CheckPermissieRead() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE }, 2);
+
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
+
+
+    private boolean CheckPermissieMic() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(Manifest.permission.RECORD_AUDIO)
+                    == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO }, 3);
+
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
+
+
+*/
+
+
+
+    private  boolean Permissies() {
+        int permissionRecord = ContextCompat.checkSelfPermission(this,Manifest.permission.RECORD_AUDIO);
+        int permissionWrite = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int permissionRead =  ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        List<String> listPermissionsNeeded = new ArrayList<>();
+
+        if (permissionRecord != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.RECORD_AUDIO);
+        }
+        if (permissionWrite != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+        if (permissionRecord != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        }
+
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]),REQUEST_ID_MULTIPLE_PERMISSIONS);
+            return false;
+        }
+
+        return true;
     }
 }
