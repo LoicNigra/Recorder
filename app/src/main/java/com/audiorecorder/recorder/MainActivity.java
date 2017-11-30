@@ -1,8 +1,13 @@
 package com.audiorecorder.recorder;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
+import android.os.Build;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +16,8 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Wordt uiteindelij mounted/recorders.3gpp
+        // Wordt uiteindelijk mounted/recorders.3gpp
         outputfile = Environment.getExternalStorageState()+"/recorders.3gpp";
     }
 
@@ -31,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         switch(view.getId()){
             case R.id.opnemen:
                 try{
+                    CheckPermissie();
                     Opnemen();
                 }catch (Exception e){
                 //    Toast.makeText(getApplicationContext(), "Er is een probleem opgetreden met het opnemen", Toast.LENGTH_LONG).show();
@@ -47,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.afspelen:
                 try{
+                    CheckPermissie();
                     Afspelen();
                 }catch (Exception e) {
                   //  Toast.makeText(getApplicationContext(), "Er is een probleem opgetreden het afspelen", Toast.LENGTH_LONG).show();
@@ -66,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void Opnemen() throws Exception {
+
+
+
          // Moest er al een recorder opstaan, stoppen we die
         StopMediarecorder();
         //Waar gaan we het opslaan
@@ -102,7 +114,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void Afspelen() throws IOException {
-        // Checken als er recorder aanstaat, zoja dan stoppen
+
+
+
+            // Checken als er recorder aanstaat, zoja dan stoppen
         StopMediaPlayer();
 
         mediaPlayer=new MediaPlayer();
@@ -139,4 +154,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private boolean CheckPermissie() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED
+                && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE }, 1);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE }, 1);
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
 }
