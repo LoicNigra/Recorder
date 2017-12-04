@@ -19,12 +19,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.system.Os.mkdir;
+
 
 public class MainActivity extends AppCompatActivity {
 
     private MediaPlayer mediaPlayer;
     private MediaRecorder mediaRecorder;
     private String outputfile;
+    private int teller = 0;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 3;
 
     @Override
@@ -34,13 +37,17 @@ public class MainActivity extends AppCompatActivity {
         Permissies();
 
         // Wordt uiteindelijk mounted/recorders.3gpp
-        outputfile = Environment.getExternalStorageState()+"/recorders.3gpp";
+
+        outputfile = "/mnt/sdcard/record"+teller+".3gpp";
+
+
     }
 
     public void Klik(View view){
         switch(view.getId()){
             case R.id.opnemen:
                 try{
+
                     Opnemen();
                 }catch (Exception e){
                 //    Toast.makeText(getApplicationContext(), "Er is een probleem opgetreden met het opnemen", Toast.LENGTH_LONG).show();
@@ -81,8 +88,11 @@ public class MainActivity extends AppCompatActivity {
 
          // Moest er al een recorder opstaan, stoppen we die
         StopMediarecorder();
-        //Waar gaan we het opslaan
+
+        //aanmaken van file
         File outFile = new File(outputfile);
+        outFile.mkdirs();
+
             //Als deze file al bestaat => Verwijderen, we doen een overwrite
             if(outFile.exists()) {
                 outFile.delete();
