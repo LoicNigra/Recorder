@@ -6,93 +6,42 @@
     android:layout_height="match_parent"
     tools:context="com.audiorecorder.recorder.AudioActivity">
 
-    <LinearLayout
-        android:id="@+id/File3"
-        android:layout_width="345dp"
-        android:layout_height="59dp"
-        android:layout_below="@+id/File2"
-        android:layout_marginBottom="107dp"
-        android:layout_marginTop="204dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/Vorige"
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/File2"
-        android:layout_width="345dp"
-        android:layout_height="59dp"
-        android:layout_below="@+id/File1"
-        android:layout_marginTop="276dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/File0"
-        android:layout_width="342dp"
-        android:layout_height="59dp"
-        android:layout_marginBottom="289dp"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/Volgende"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintVertical_chainStyle="packed">
+        app:layout_constraintVertical_bias="0.0">
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/File1"
-        android:layout_width="342dp"
-        android:layout_height="59dp"
-        android:layout_below="@+id/File0"
-        android:layout_marginBottom="185dp"
-        android:layout_marginTop="128dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/Volgende"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        <ListView
+            android:id="@+id/AudioLijst"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:paddingTop="20dp" />
 
-    </LinearLayout>
 
-    <Button
-        android:id="@+id/Vorige"
-        android:layout_width="120dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="75dp"
-        android:layout_marginRight="75dp"
-        android:layout_marginStart="9dp"
-        android:layout_marginLeft="9dp"
-        android:text="@string/Vorige"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/Volgende"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/File3" />
+    </RelativeLayout>
 
-    <Button
-        android:id="@+id/Volgende"
-        android:layout_width="120dp"
-        android:layout_height="47dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginRight="31dp"
-        android:text="@string/Volgende"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.833"
-        app:layout_constraintStart_toEndOf="@+id/Vorige"
-        app:layout_constraintTop_toBottomOf="@+id/File1" />
+
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.audiorecorder.recorder.TabFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        tools:layout="@layout/tab_fragment" />
 
 </android.support.constraint.ConstraintLayout>

@@ -5,11 +5,13 @@ import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Environment;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TabHost;
 import android.widget.Toast;
 
 // import static com.audiorecorder.recorder.Permissies.*;
@@ -30,6 +32,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        TabHost th = (TabHost) findViewById(R.id.tabhost);
+        th.setup();
+
+        TabHost.TabSpec specs = th.newTabSpec("tag1");
+        specs.setContent(R.id.Main);
+        specs.setIndicator("Main");
+        th.addTab(specs);
+
+        specs = th.newTabSpec("tag2");
+        specs.setContent(R.id.Files);
+        specs.setIndicator("Files");
+        th.addTab(specs);
+
+
         Permissies();
 
     }
@@ -90,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         if (permissionWrite != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
-        if (permissionRecord != PackageManager.PERMISSION_GRANTED) {
+        if (permissionRead != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
 

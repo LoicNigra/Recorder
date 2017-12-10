@@ -93,4 +93,10 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+    <string name="Opnemen">Opnemen</string>
+    <string name="Stoppen">Stoppen</string>
+    <string name="Afspelen">Afspelen</string>
+    <string name="StopAfspelen">StopAfspelen</string>
+    <string name="Main">Main</string>
+    <string name="Files">Files</string>
 </resources>
