@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,27 +26,22 @@ import static com.audiorecorder.recorder.Variabelen.*;
 
 public class AudioActivity extends Activity {
 
+    private static final String TAG = "AudioActivity";
+    private SectionsPageAdapter mSectionsPageAdapter;
+    private ViewPager mViewPager;
+
+
+
     @Override
-    protected void onCreate(Bundle audioInstanceState) {
-        super.onCreate(audioInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio);
-
-        TabHost th = (TabHost) findViewById(R.id.tabhost);
-        th.setup();
-
-        TabHost.TabSpec specs = th.newTabSpec("tag1");
-        specs.setContent(R.id.Main);
-        specs.setIndicator("Main");
-        th.addTab(specs);
-
-        specs = th.newTabSpec("tag2");
-        specs.setContent(R.id.Files);
-        specs.setIndicator("Files");
-        th.addTab(specs);
 
         getAudio();
         LijstTonen();
     }
+
+
 
 
     public void getAudio(){
@@ -85,7 +81,6 @@ public class AudioActivity extends Activity {
             }
         });
     }
-
 
 
 

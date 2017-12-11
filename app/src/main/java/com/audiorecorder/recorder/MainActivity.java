@@ -1,6 +1,9 @@
 package com.audiorecorder.recorder;
 
 import android.Manifest;
+import android.app.ActionBar;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -8,10 +11,13 @@ import android.os.Environment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TabHost;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 // import static com.audiorecorder.recorder.Permissies.*;
@@ -28,22 +34,46 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    public static final String TAG = "MainActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TabHost th = (TabHost) findViewById(R.id.tabhost);
+
+
+        final TabHost th = (TabHost) findViewById(R.id.tabhost);
         th.setup();
 
-        TabHost.TabSpec specs = th.newTabSpec("tag1");
+        TabHost.TabSpec specs = th.newTabSpec("Main");
         specs.setContent(R.id.Main);
         specs.setIndicator("Main");
         th.addTab(specs);
 
-        specs = th.newTabSpec("tag2");
-        specs.setContent(R.id.Files);
-        specs.setIndicator("Files");
-        th.addTab(specs);
+        TabHost.TabSpec specs2 = th.newTabSpec("Files");
+        specs2 = th.newTabSpec("Files");
+        specs2.setContent(R.id.Files);
+        specs2.setIndicator("Files");
+        th.addTab(specs2);
+
+
+        th.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+
+            public void onTabChanged(String tabId) {
+
+                switch (th.getCurrentTab()) {
+                    case 0:
+                        onClick();
+                        break;
+                    case 1:
+                      onClick2();
+                        break;
+
+                }
+            }
+        });
+
 
 
         Permissies();
@@ -121,4 +151,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-}
+    public void onClick(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClick2(){
+        Intent intent = new Intent(this, AudioActivity.class);
+        startActivity(intent);
+    }
+    }
+
+

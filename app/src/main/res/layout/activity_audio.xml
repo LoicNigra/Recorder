@@ -36,12 +36,12 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.audiorecorder.recorder.TabFragment"
+        android:name="com.audiorecorder.recorder.TabFragment_Main"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_height="59dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        tools:layout="@layout/tab_fragment" />
+        tools:layout="@layout/tab_fragment_main" />
 
 </android.support.constraint.ConstraintLayout>

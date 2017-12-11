@@ -33,7 +33,8 @@
                     android:text="@string/Main"
                     android:layout_width="380dp"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:onClick="onClick">
 
                 </LinearLayout>
 
@@ -42,7 +43,8 @@
                     android:text="@string/Files"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:onClick="onClick2">
 
                 </LinearLayout>
 
