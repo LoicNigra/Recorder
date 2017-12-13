@@ -1,5 +1,6 @@
 package com.audiorecorder.recorder;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
@@ -7,7 +8,9 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,20 +18,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
+import android.support.v4.app.Fragment;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.audiorecorder.recorder.Afspelen.afspelen;
 import static com.audiorecorder.recorder.Variabelen.*;
+import static com.audiorecorder.recorder.Opnemen.*;
 
-public class AudioActivity extends Activity {
+public class AudioActivity extends AppCompatActivity {
 
     private static final String TAG = "AudioActivity";
-    private SectionsPageAdapter mSectionsPageAdapter;
-    private ViewPager mViewPager;
+    ArrayList<String> audioList;
+
 
 
 
@@ -36,52 +44,85 @@ public class AudioActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio);
+        Tabs();
 
-        getAudio();
-        LijstTonen();
+       LijstTonen();
+
+    }
+
+    public ArrayList<String> getAudio(){
+
+        audioList = new ArrayList<String>();
+        File f = new File(directory);
+
+
+            File[] files = f.listFiles();
+
+            for (int i = 0; i < files.length; i++) {
+                if(outFile.getName().endsWith(".3gpp")) {
+                    audioList.add(files[i].getName());
+                }
+            }
+
+
+        return audioList;
     }
 
 
-
-
-    public void getAudio(){
-        ContentResolver contentResolver = getContentResolver();
-        Uri audioUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor audioCursor = contentResolver.query(audioUri, null,null,null,null );
-
-        if (audioCursor != null && audioCursor.moveToFirst()){
-            int audioTitle = audioCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
-
-            do {
-                String Title = audioCursor.getString(audioTitle);
-                arrayList.add(Title);
-
-            } while (audioCursor.moveToNext());
-        }
-    }
-
-
+    @SuppressLint("NewApi")
     public void LijstTonen(){
 
-        listView = listView.findViewById(R.id.AudioLijst);
-        arrayList = new ArrayList<>();
         getAudio();
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
-        listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
-                try {
+        ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, audioList);
+           ListView listView = (ListView) findViewById(R.id.AudioLijst);
+           listView.setAdapter(adapter);
 
-                    afspelen();
-                } catch (Exception e) {
-                    e.printStackTrace();
+    }
+
+    public void Tabs() {
+
+
+        final TabHost th = (TabHost) findViewById(R.id.tabhost);
+        th.setup();
+
+
+        TabHost.TabSpec specs = th.newTabSpec("Files");
+        specs.setContent(R.id.Files);
+        specs.setIndicator("Files");
+        th.addTab(specs);
+
+        TabHost.TabSpec specs2 = th.newTabSpec("Main");
+        specs2.setContent(R.id.Main);
+        specs2.setIndicator("Main");
+        th.addTab(specs2);
+
+
+        th.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+
+            public void onTabChanged(String tabId) {
+
+                switch (th.getCurrentTab()) {
+                    case 0:
+                        onClick2();
+                        break;
+                    case 1:
+                        onClick();
+                        break;
+
                 }
             }
         });
+
+    }
+    public void onClick(){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
-
-
+    public void onClick2(){
+        Intent intent = new Intent(this, AudioActivity.class);
+        startActivity(intent);
+    }
 }
+

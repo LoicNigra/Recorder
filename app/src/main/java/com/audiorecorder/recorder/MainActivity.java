@@ -25,6 +25,7 @@ import static com.audiorecorder.recorder.Opnemen.*;
 import static com.audiorecorder.recorder.Stoppen.*;
 import static com.audiorecorder.recorder.Afspelen.*;
 import static com.audiorecorder.recorder.Variabelen.*;
+import static com.audiorecorder.recorder.TabFragment_Main.*;
 
 
 import java.io.File;
@@ -42,41 +43,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        final TabHost th = (TabHost) findViewById(R.id.tabhost);
-        th.setup();
-
-        TabHost.TabSpec specs = th.newTabSpec("Main");
-        specs.setContent(R.id.Main);
-        specs.setIndicator("Main");
-        th.addTab(specs);
-
-        TabHost.TabSpec specs2 = th.newTabSpec("Files");
-        specs2 = th.newTabSpec("Files");
-        specs2.setContent(R.id.Files);
-        specs2.setIndicator("Files");
-        th.addTab(specs2);
-
-
-        th.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-
-            public void onTabChanged(String tabId) {
-
-                switch (th.getCurrentTab()) {
-                    case 0:
-                        onClick();
-                        break;
-                    case 1:
-                      onClick2();
-                        break;
-
-                }
-            }
-        });
-
-
-
         Permissies();
+        Tabs();
 
     }
 
@@ -149,7 +117,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+public void Tabs() {
 
+    final TabHost th = (TabHost) findViewById(R.id.tabhost);
+    th.setup();
+
+        TabHost.TabSpec specs = th.newTabSpec("Main");
+        specs.setContent(R.id.Main);
+        specs.setIndicator("Main");
+        th.addTab(specs);
+
+        TabHost.TabSpec specs2 = th.newTabSpec("Files");
+        specs2.setContent(R.id.Files);
+        specs2.setIndicator("Files");
+        th.addTab(specs2);
+
+
+        th.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+
+            public void onTabChanged(String tabId) {
+
+                switch (th.getCurrentTab()) {
+                    case 0:
+                        onClick();
+                        break;
+                    case 1:
+                        onClick2();
+                        break;
+                }
+            }
+        });
+
+    }
 
     public void onClick(){
         Intent intent = new Intent(this, MainActivity.class);
