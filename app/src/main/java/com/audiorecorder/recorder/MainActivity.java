@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     opnemen();
                     Toast.makeText(getApplicationContext(), "Bezig met opnemen van opname " + teller, Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), "Er is een probleem opgetreden met het opnemen", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Er is een probleem opgetreden met het opnemen", Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
                 break;
@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public boolean Permissies() {
 
         int permissionRecord = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
@@ -117,10 +116,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-public void Tabs() {
+    public void Tabs() {
 
-    final TabHost th = (TabHost) findViewById(R.id.tabhost);
-    th.setup();
+        final TabHost th = (TabHost) findViewById(R.id.tabhost);
+        th.setup();
 
         TabHost.TabSpec specs = th.newTabSpec("Main");
         specs.setContent(R.id.Main);
@@ -150,15 +149,15 @@ public void Tabs() {
 
     }
 
-    public void onClick(){
+    public void onClick() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
-    public void onClick2(){
+    public void onClick2() {
         Intent intent = new Intent(this, AudioActivity.class);
         startActivity(intent);
     }
-    }
+}
 
 

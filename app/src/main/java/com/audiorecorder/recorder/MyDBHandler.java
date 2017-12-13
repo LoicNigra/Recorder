@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.ContentValues;
 
 
-
 public class MyDBHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
@@ -16,7 +15,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     private static final String COLUMN_ID = "_id";
     private static final String COLUMN_FILENAME = "_fileName";
 
-    public MyDBHandler (Context context, String name, SQLiteDatabase.CursorFactory factory, int version){
+    public MyDBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 

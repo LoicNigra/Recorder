@@ -16,7 +16,7 @@ public class AudioAdapter extends BaseAdapter {
     Context c;
     ArrayList<AudioBestand> audiobestanden;
 
-    public AudioAdapter(Context c, ArrayList<AudioBestand> audiobestanden){
+    public AudioAdapter(Context c, ArrayList<AudioBestand> audiobestanden) {
         this.c = c;
         this.audiobestanden = audiobestanden;
     }
@@ -39,21 +39,21 @@ public class AudioAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-         if (view == null){
-             view = LayoutInflater.from(c).inflate(R.layout.activity_audio, viewGroup, false);
-         }
-         final AudioBestand audioBestand = (AudioBestand) this.getItem(i);
+        if (view == null) {
+            view = LayoutInflater.from(c).inflate(R.layout.activity_audio, viewGroup, false);
+        }
+        final AudioBestand audioBestand = (AudioBestand) this.getItem(i);
         TextView title = (TextView) view.findViewById(R.id.AudioLijst);
 
         title.setText(audioBestand.getTitle());
 
-        view.setOnClickListener(new View.OnClickListener(){
+        view.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 //LOGICA VOOR AFSPELEN
             }
-        } );
+        });
         return view;
     }
 }

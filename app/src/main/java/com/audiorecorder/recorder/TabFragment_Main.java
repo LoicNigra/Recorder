@@ -13,12 +13,11 @@ public class TabFragment_Main extends Fragment {
     public static final String FRAGMENT_TAG = "Main";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_fragment_main, container, false);
         return view;
 
     }
-
 
 
 }

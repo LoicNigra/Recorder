@@ -5,16 +5,16 @@ import static com.audiorecorder.recorder.Opnemen.*;
 
 public class AudioBestand {
 
-        String title =_fileName;
+    String title = _fileName;
 
 
-    void setTitle(String title){
+    void setTitle(String title) {
         this.title = title;
     }
-        String getTitle(){
-            return title;
-        }
 
+    String getTitle() {
+        return title;
+    }
 
 
 }

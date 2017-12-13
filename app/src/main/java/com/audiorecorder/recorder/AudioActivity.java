@@ -43,31 +43,28 @@ public class AudioActivity extends AppCompatActivity {
     ArrayList<String> audioList;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio);
         Tabs();
-
-       LijstTonen();
+        LijstTonen();
 
     }
 
-    public ArrayList<String> getAudio(){
+    public ArrayList<String> getAudio() {
 
         audioList = new ArrayList<String>();
         File f = new File(directory);
 
 
-            File[] files = f.listFiles();
+        File[] files = f.listFiles();
 
-            for (int i = 0; i < files.length; i++) {
-                if(outFile.getName().endsWith(".3gpp")) {
-                    audioList.add(files[i].getName());
-                }
+        for (int i = 0; i < files.length; i++) {
+            if (outFile.getName().endsWith(".3gpp")) {
+                audioList.add(files[i].getName());
             }
+        }
 
 
         return audioList;
@@ -75,46 +72,41 @@ public class AudioActivity extends AppCompatActivity {
 
 
     @SuppressLint("NewApi")
-    public void LijstTonen(){
+    public void LijstTonen() {
 
-Cursor musiccursor;
+        Cursor musiccursor;
 
 
         getAudio();
 
         ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, audioList);
-           final ListView listView = (ListView) findViewById(R.id.AudioLijst);
-           listView.setAdapter(adapter);
+        final ListView listView = (ListView) findViewById(R.id.AudioLijst);
+        listView.setAdapter(adapter);
 
-           listView.setOnItemClickListener(
-                   new AdapterView.OnItemClickListener() {
-                       @Override
-                       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                           String audio = String.valueOf(parent.getItemAtPosition(position));
-try {
-    StopMediaPlayer();
-    mediaPlayer = new MediaPlayer();
+        listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        String audio = String.valueOf(parent.getItemAtPosition(position));
+                        try {
+                            StopMediaPlayer();
+                            mediaPlayer = new MediaPlayer();
 
-    mediaPlayer.setDataSource(directory + audio);
+                            mediaPlayer.setDataSource(directory + audio);
 
-    mediaPlayer.prepare();
+                            mediaPlayer.prepare();
 
-    mediaPlayer.start();
-} catch (IOException e) {
-    e.printStackTrace();
-}
-                         Toast.makeText(getApplicationContext(), "Aan het afspelen: "+ audio, Toast.LENGTH_LONG).show();
-                       }
-                   }
+                            mediaPlayer.start();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Toast.makeText(getApplicationContext(), "Aan het afspelen: " + audio, Toast.LENGTH_LONG).show();
+                    }
+                }
 
 
-           );
+        );
     }
-
-
-
-
-
 
 
     public void Tabs() {
@@ -152,12 +144,13 @@ try {
         });
 
     }
-    public void onClick(){
+
+    public void onClick() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
-    public void onClick2(){
+    public void onClick2() {
         Intent intent = new Intent(this, AudioActivity.class);
         startActivity(intent);
     }
