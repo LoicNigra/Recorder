@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -25,10 +26,14 @@ import android.widget.Toast;
 import android.support.v4.app.Fragment;
 
 import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.audiorecorder.recorder.Afspelen.afspelen;
+import static com.audiorecorder.recorder.Controle.StopMediaPlayer;
+import static com.audiorecorder.recorder.Controle.StopMediarecorder;
 import static com.audiorecorder.recorder.Variabelen.*;
 import static com.audiorecorder.recorder.Opnemen.*;
 
@@ -72,13 +77,45 @@ public class AudioActivity extends AppCompatActivity {
     @SuppressLint("NewApi")
     public void LijstTonen(){
 
+Cursor musiccursor;
+
+
         getAudio();
 
         ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, audioList);
-           ListView listView = (ListView) findViewById(R.id.AudioLijst);
+           final ListView listView = (ListView) findViewById(R.id.AudioLijst);
            listView.setAdapter(adapter);
 
+           listView.setOnItemClickListener(
+                   new AdapterView.OnItemClickListener() {
+                       @Override
+                       public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                           String audio = String.valueOf(parent.getItemAtPosition(position));
+try {
+    StopMediaPlayer();
+    mediaPlayer = new MediaPlayer();
+
+    mediaPlayer.setDataSource(directory + audio);
+
+    mediaPlayer.prepare();
+
+    mediaPlayer.start();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+                         Toast.makeText(getApplicationContext(), "Aan het afspelen: "+ audio, Toast.LENGTH_LONG).show();
+                       }
+                   }
+
+
+           );
     }
+
+
+
+
+
+
 
     public void Tabs() {
 
@@ -124,5 +161,7 @@ public class AudioActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AudioActivity.class);
         startActivity(intent);
     }
+
+
 }
 
