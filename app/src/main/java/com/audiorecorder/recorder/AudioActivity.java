@@ -16,6 +16,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -50,6 +52,43 @@ public class AudioActivity extends AppCompatActivity {
         Tabs();
         LijstTonen();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_view, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.MainMenu:
+                if (item.isChecked()) {
+                    item.setChecked(false);
+                } else {
+                    item.setCheckable(true);
+                }
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.FilesMenu:
+                if(item.isChecked()){
+                    item.setChecked(false);
+                } else {
+                    item.setCheckable(true);
+                }
+                intent = new Intent(this, AudioActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.Quit:
+                System.exit(0);
+
+            default:
+                return  super.onOptionsItemSelected(item);
+        }
     }
 
     public ArrayList<String> getAudio() {
@@ -148,11 +187,13 @@ public class AudioActivity extends AppCompatActivity {
     public void onClick() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void onClick2() {
         Intent intent = new Intent(this, AudioActivity.class);
         startActivity(intent);
+        finish();
     }
 
 

@@ -100,4 +100,6 @@
     <string name="Main">Main</string>
     <string name="Files">Files</string>
     <string name="Logoehb">LogoEHB</string>
+    <string name="settings">settings</string>
+    <string name="Quit">Quit</string>
 </resources>

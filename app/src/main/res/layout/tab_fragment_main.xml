@@ -2,7 +2,9 @@
 
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:id="@+id/tabs_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 
     <TabHost
@@ -20,7 +22,7 @@
 
             <TabWidget
                 android:id="@android:id/tabs"
-                android:layout_width="380dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <FrameLayout
@@ -30,30 +32,27 @@
 
                 <LinearLayout
                     android:id="@+id/Main"
-                    android:text="@string/Main"
                     android:layout_width="380dp"
                     android:layout_height="match_parent"
+                    android:onClick="onClick"
                     android:orientation="horizontal"
-                    android:onClick="onClick">
+                    android:text="@string/Main">
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/Files"
-                    android:text="@string/Files"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:onClick="onClick2"
                     android:orientation="horizontal"
-                    android:onClick="onClick2">
+                    android:text="@string/Files">
 
                 </LinearLayout>
 
             </FrameLayout>
         </LinearLayout>
     </TabHost>
-
-
-
 
 
 </RelativeLayout>

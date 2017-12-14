@@ -15,6 +15,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TabHost;
 import android.widget.TableLayout;
@@ -26,6 +28,7 @@ import static com.audiorecorder.recorder.Stoppen.*;
 import static com.audiorecorder.recorder.Afspelen.*;
 import static com.audiorecorder.recorder.Variabelen.*;
 import static com.audiorecorder.recorder.TabFragment_Main.*;
+import android.widget.RelativeLayout;
 
 
 import java.io.File;
@@ -152,12 +155,59 @@ public class MainActivity extends AppCompatActivity {
     public void onClick() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void onClick2() {
         Intent intent = new Intent(this, AudioActivity.class);
         startActivity(intent);
+        finish();
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_view, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+      switch (item.getItemId()) {
+            case R.id.MainMenu:
+                if (item.isChecked()) {
+                    item.setChecked(false);
+                } else {
+                    item.setCheckable(true);
+                }
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.FilesMenu:
+                if(item.isChecked()){
+                    item.setChecked(false);
+                } else {
+                    item.setCheckable(true);
+                }
+                intent = new Intent(this, AudioActivity.class);
+                startActivity(intent);
+                return true;
+
+            case R.id.Quit:
+               System.exit(0);
+
+            default:
+                return  super.onOptionsItemSelected(item);
+        }
+
+
+
+
+    }
+
+
 }
 
 

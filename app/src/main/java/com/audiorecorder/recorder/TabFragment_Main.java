@@ -18,6 +18,4 @@ public class TabFragment_Main extends Fragment {
         return view;
 
     }
-
-
 }
