@@ -11,6 +11,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -147,40 +148,48 @@ public class AudioActivity extends AppCompatActivity {
         );
     }
 
-
     public void Tabs() {
 
 
-        final TabHost th = (TabHost) findViewById(R.id.tabhost);
-        th.setup();
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.Bestanden));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.Hoofdscherm));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 
-        TabHost.TabSpec specs = th.newTabSpec("Files");
-        specs.setContent(R.id.Files);
-        specs.setIndicator("Files");
-        th.addTab(specs);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final PagerAdapter adapter = new PagerAdapter
+                (getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        TabHost.TabSpec specs2 = th.newTabSpec("Main");
-        specs2.setContent(R.id.Main);
-        specs2.setIndicator("Main");
-        th.addTab(specs2);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
 
-
-        th.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-
-            public void onTabChanged(String tabId) {
-
-                switch (th.getCurrentTab()) {
+                switch (tab.getPosition()) {
                     case 0:
                         onClick2();
                         break;
                     case 1:
                         onClick();
                         break;
-
                 }
             }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
         });
+
+
 
     }
 

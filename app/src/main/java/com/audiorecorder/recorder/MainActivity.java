@@ -121,25 +121,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void Tabs() {
 
-        final TabHost th = (TabHost) findViewById(R.id.tabhost);
-        th.setup();
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.Hoofdscherm));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.Bestanden));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        TabHost.TabSpec specs = th.newTabSpec("Main");
-        specs.setContent(R.id.Main);
-        specs.setIndicator("Main");
-        th.addTab(specs);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final PagerAdapter adapter = new PagerAdapter
+                (getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        TabHost.TabSpec specs2 = th.newTabSpec("Files");
-        specs2.setContent(R.id.Files);
-        specs2.setIndicator("Files");
-        th.addTab(specs2);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
 
-
-        th.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-
-            public void onTabChanged(String tabId) {
-
-                switch (th.getCurrentTab()) {
+                switch (tab.getPosition()) {
                     case 0:
                         onClick();
                         break;
@@ -148,7 +146,19 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
             }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
         });
+
+
 
     }
 

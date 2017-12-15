@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Recorder</string>
+    <string name="Vorige">Vorige</string>
+    <string name="Volgende">Volgende</string>
+    <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="action_settings">Instellingen</string>
+    <string name="Opnemen">Opnemen</string>
+    <string name="Stoppen">Stoppen</string>
+    <string name="Afspelen">Afspelen</string>
+    <string name="StopAfspelen">Stop Afspelen</string>
+    <string name="Hoofdscherm">Hoofdscherm</string>
+    <string name="Bestanden">Bestanden</string>
+    <string name="Logoehb">LogoEHB</string>
+    <string name="instellingen">instellingen</string>
+    <string name="Afsluiten">Afsluiten</string>
+</resources>
