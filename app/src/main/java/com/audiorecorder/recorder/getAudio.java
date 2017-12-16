@@ -1,35 +1,53 @@
-/*
 
 package com.audiorecorder.recorder;
 
 
-import android.content.ContentResolver;
-import android.database.Cursor;
-import android.media.MediaRecorder;
-import android.net.Uri;
-import android.provider.MediaStore;
+import android.os.AsyncTask;
 
-import static com.audiorecorder.recorder.AudioActivity.*;
+import java.io.File;
+import java.util.ArrayList;
+
 import static com.audiorecorder.recorder.Opnemen.*;
 
-public class getAudio {
+public class getAudio extends AsyncTask<String, Integer, ArrayList<String>> {
 
-    public void getAudio(){
-        ContentResolver contentResolver = AudioActivity.getContentResolver();
-        Uri audioUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor audioCursor = contentResolver.query(audioUri, null,null,null,null );
+    static ArrayList<String> audioList;
 
-        if (audioCursor != null && audioCursor.moveToFirst()){
-            int audioTitle = audioCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
 
-            do {
-                String Title = audioCursor.getString(audioTitle);
-                arrayList.add(Title);
+    @Override
+    protected ArrayList<String> doInBackground(String... strings) {
+        audioList = new ArrayList<String>();
 
-            } while (audioCursor.moveToNext());
+        File f = new File(directory);
+        File[] files = f.listFiles();
+
+        for (int i = 0; i < files.length; i++) {
+            if (outFile.getName().endsWith(".3gpp")) {
+                audioList.add(files[i].getName());
+            }
         }
+        return audioList;
     }
+
+
+/*
+    public static ArrayList<String> getAudio() {
+
+        audioList = new ArrayList<String>();
+
+        File f = new File(directory);
+        File[] files = f.listFiles();
+
+        for (int i = 0; i < files.length; i++) {
+            if (outFile.getName().endsWith(".3gpp")) {
+                audioList.add(files[i].getName());
+            }
+        }
+        return audioList;
+    }
+*/
+
+
 
 }
 
-*/

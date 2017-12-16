@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
@@ -27,6 +28,8 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.Toast;
 import android.support.v4.app.Fragment;
+import android.os.Handler;
+import android.os.Message;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,15 +38,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.audiorecorder.recorder.Afspelen.afspelen;
-import static com.audiorecorder.recorder.Controle.StopMediaPlayer;
-import static com.audiorecorder.recorder.Controle.StopMediarecorder;
+import static com.audiorecorder.recorder.Controle.*;
+import static com.audiorecorder.recorder.getAudio.*;
 import static com.audiorecorder.recorder.Variabelen.*;
 import static com.audiorecorder.recorder.Opnemen.*;
 
 public class AudioActivity extends AppCompatActivity {
 
     private static final String TAG = "AudioActivity";
-    ArrayList<String> audioList;
+
+
 
 
     @Override
@@ -51,7 +55,8 @@ public class AudioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio);
         Tabs();
-        LijstTonen();
+
+       LijstTonen();
 
     }
 
@@ -92,32 +97,14 @@ public class AudioActivity extends AppCompatActivity {
         }
     }
 
-    public ArrayList<String> getAudio() {
-
-        audioList = new ArrayList<String>();
-        File f = new File(directory);
-
-
-        File[] files = f.listFiles();
-
-        for (int i = 0; i < files.length; i++) {
-            if (outFile.getName().endsWith(".3gpp")) {
-                audioList.add(files[i].getName());
-            }
-        }
-
-
-        return audioList;
-    }
 
 
     @SuppressLint("NewApi")
     public void LijstTonen() {
 
-        Cursor musiccursor;
 
-
-        getAudio();
+       getAudio getaudio = new getAudio();
+       getaudio.doInBackground();
 
         ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, audioList);
         final ListView listView = (ListView) findViewById(R.id.AudioLijst);
@@ -140,11 +127,9 @@ public class AudioActivity extends AppCompatActivity {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        Toast.makeText(getApplicationContext(), "Aan het afspelen: " + audio, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), audio, Toast.LENGTH_LONG).show();
                     }
                 }
-
-
         );
     }
 
@@ -204,6 +189,17 @@ public class AudioActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
