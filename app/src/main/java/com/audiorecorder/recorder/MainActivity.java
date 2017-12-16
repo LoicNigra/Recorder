@@ -3,6 +3,9 @@ package com.audiorecorder.recorder;
 import android.Manifest;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
@@ -10,6 +13,7 @@ import android.media.MediaRecorder;
 import android.os.Environment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -42,14 +46,19 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
     MyDBHandler dbHandler;
+    NotificationCompat.Builder notification;
+    private static final int uniqueID = 69;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dbHandler = new MyDBHandler(this, null, null, 1);
         Permissies();
         Tabs();
+
+        dbHandler = new MyDBHandler(this, null, null, 1);
+        notification = new NotificationCompat.Builder(this);
+        //notification.setAutoCancel(true);  ==> NIET, Notification enkel weg wanneer opnemen gestopt
 
     }
 
@@ -61,6 +70,22 @@ public class MainActivity extends AppCompatActivity {
                     // Opslaan in DB
                     AudioBestand audioBestand = new AudioBestand();
                     dbHandler.addAudio(audioBestand);
+
+
+                    notification.setSmallIcon(R.drawable.logo);
+                    notification.setTicker("Recorder is aan het opnemen");
+                    notification.setWhen(System.currentTimeMillis());
+                    notification.setContentTitle("Recording");
+                    notification.setContentText("Recorder is aan het opnemen");
+
+                    //Intent vanuit een andere 'APP' naar deze te gaan
+                    Intent i = new Intent(this, MainActivity.class);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+                    notification.setContentIntent(pendingIntent);
+                    //Build Notification
+                    NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    nm.notify(uniqueID, notification.build());
+
                     Toast.makeText(getApplicationContext(), "Bezig met opnemen van opname " + teller, Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "Er is een probleem opgetreden met het opnemen", Toast.LENGTH_LONG).show();
@@ -70,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
             case R.id.stoppen:
                 try {
                     OpnemenStoppen();
+                    NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                    nm.cancel(uniqueID);
                     Toast.makeText(getApplicationContext(), "Opname is gestopt van opname " + teller, Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "Er is een probleem opgetreden het stoppen", Toast.LENGTH_LONG).show();
@@ -162,8 +189,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
 
     }
 
