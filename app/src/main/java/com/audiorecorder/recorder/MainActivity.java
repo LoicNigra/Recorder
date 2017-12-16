@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TabHost;
 import android.widget.TableLayout;
 import android.widget.Toast;
@@ -40,12 +41,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public static final String TAG = "MainActivity";
+    MyDBHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        dbHandler = new MyDBHandler(this, null, null, 1);
         Permissies();
         Tabs();
 
@@ -56,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.opnemen:
                 try {
                     opnemen();
+                    // Opslaan in DB
+                    AudioBestand audioBestand = new AudioBestand();
+                    dbHandler.addAudio(audioBestand);
                     Toast.makeText(getApplicationContext(), "Bezig met opnemen van opname " + teller, Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "Er is een probleem opgetreden met het opnemen", Toast.LENGTH_LONG).show();
@@ -216,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
 
 }

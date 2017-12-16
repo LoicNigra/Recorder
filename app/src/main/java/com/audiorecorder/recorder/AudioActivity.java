@@ -48,16 +48,12 @@ public class AudioActivity extends AppCompatActivity {
     private static final String TAG = "AudioActivity";
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio);
         Tabs();
-
-       LijstTonen();
-
+        LijstTonen();
     }
 
     @Override
@@ -80,7 +76,7 @@ public class AudioActivity extends AppCompatActivity {
                 return true;
 
             case R.id.FilesMenu:
-                if(item.isChecked()){
+                if (item.isChecked()) {
                     item.setChecked(false);
                 } else {
                     item.setCheckable(true);
@@ -93,18 +89,16 @@ public class AudioActivity extends AppCompatActivity {
                 System.exit(0);
 
             default:
-                return  super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);
         }
     }
-
 
 
     @SuppressLint("NewApi")
     public void LijstTonen() {
 
-
-       getAudio getaudio = new getAudio();
-       getaudio.doInBackground();
+        getAudio getaudio = new getAudio();
+        getaudio.doInBackground();
 
         ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, audioList);
         final ListView listView = (ListView) findViewById(R.id.AudioLijst);
@@ -175,7 +169,6 @@ public class AudioActivity extends AppCompatActivity {
         });
 
 
-
     }
 
     public void onClick() {
@@ -189,17 +182,6 @@ public class AudioActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
