@@ -1,56 +1,24 @@
-package com.audiorecorder.recorder;
+package com.audiorecorder.recorder.Activities;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.FragmentTransaction;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TabHost;
-import android.widget.Toast;
-import android.support.v4.app.Fragment;
-import android.os.Handler;
-import android.os.Message;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
+import com.audiorecorder.recorder.Adapters.PagerAdapter;
+import com.audiorecorder.recorder.R;
 
-import static com.audiorecorder.recorder.Afspelen.afspelen;
-import static com.audiorecorder.recorder.Controle.*;
-import static com.audiorecorder.recorder.MainActivity.getMainContext;
-
-import static com.audiorecorder.recorder.getAudio.*;
-import static com.audiorecorder.recorder.Variabelen.*;
-import static com.audiorecorder.recorder.LijstTonen.*;
+import static com.audiorecorder.recorder.Methodes.LijstTonen.*;
 
 public class AudioActivity extends AppCompatActivity {
 
     private static final String TAG = "AudioActivity";
     private static Context audioContext;
-    static AudioActivity audioActivity;
+    public static AudioActivity audioActivity;
 
 
     public static Context getAudioContext(){

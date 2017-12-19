@@ -1,17 +1,11 @@
-package com.audiorecorder.recorder;
+package com.audiorecorder.recorder.Activities;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,29 +15,30 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import static com.audiorecorder.recorder.AudioActivity.audioActivity;
-import static com.audiorecorder.recorder.AudioActivity.getAudioContext;
-import static com.audiorecorder.recorder.Permissies.*;
-import static com.audiorecorder.recorder.Opnemen.*;
-import static com.audiorecorder.recorder.Stoppen.*;
-import static com.audiorecorder.recorder.Afspelen.*;
+import com.audiorecorder.recorder.Database.AudioBestand;
+import com.audiorecorder.recorder.Database.MyDBHandler;
+import com.audiorecorder.recorder.Adapters.PagerAdapter;
+// import com.audiorecorder.recorder.Methodes.onClick;
+import com.audiorecorder.recorder.R;
 
-import static com.audiorecorder.recorder.Variabelen.*;
+import static com.audiorecorder.recorder.Methodes.Permissies.*;
+import static com.audiorecorder.recorder.Methodes.Opnemen.*;
+import static com.audiorecorder.recorder.Methodes.Stoppen.*;
+import static com.audiorecorder.recorder.Methodes.Afspelen.*;
+
 // import static com.audiorecorder.recorder.TabClick.*;
 
 
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
-    private static Context Maincontext;
-    static MainActivity mainActivity;
+    public static Context Maincontext;
+    public  static MainActivity mainActivity;
 
-    static MyDBHandler dbHandler;
-    static NotificationCompat.Builder notification;
+    public static MyDBHandler dbHandler;
+    public static NotificationCompat.Builder notification;
     private static final int uniqueID = 69;
+
+    public static Button btnOpnemen, btnStoppen, btnAfspelen, btnAfspelenStoppen;
 
     public static Context getMainContext(){
         return  MainActivity.Maincontext;
@@ -69,13 +64,6 @@ public class MainActivity extends AppCompatActivity {
         myClient.execute();
 */
     }
-
-
-
-
-
-
-
 
 
 

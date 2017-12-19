@@ -4,7 +4,7 @@
     android:id="@+id/main_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.audiorecorder.recorder.MainActivity">
+    tools:context="com.audiorecorder.recorder.Activities.MainActivity">
 
 
     <LinearLayout
@@ -84,7 +84,7 @@
 <!--
     <fragment
         android:id="@+id/fragment"
-        android:name="com.audiorecorder.recorder.TabFragment_Main"
+        android:nacom.audiorecorder.recorder.Fragments.TabFragment_MainMain"
         android:layout_width="match_parent"
         android:layout_height="59dp"
         android:layout_alignParentLeft="true"

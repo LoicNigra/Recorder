@@ -1,11 +1,10 @@
-package com.audiorecorder.recorder;
+package com.audiorecorder.recorder.Database;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
 import android.content.Context;
 import android.content.ContentValues;
-import android.support.design.widget.TabLayout;
 
 
 public class MyDBHandler extends SQLiteOpenHelper {

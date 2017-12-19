@@ -16,7 +16,7 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintVertical_bias="0.0"
-    tools:context="com.audiorecorder.recorder.AudioActivity">
+    tools:context="com.audiorecorder.recorder.Activities.AudioActivity">
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
@@ -45,7 +45,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.audiorecorder.recorder.TabFragment_Main"
+        android:nacom.audiorecorder.recorder.Fragments.TabFragment_MainMain"
         android:layout_width="match_parent"
         android:layout_height="59dp"
         android:layout_alignParentLeft="true"

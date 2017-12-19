@@ -1,9 +1,11 @@
-package com.audiorecorder.recorder;
+package com.audiorecorder.recorder.Adapters;
 
-import android.graphics.pdf.PdfDocument;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.audiorecorder.recorder.Fragments.TabFragment_Files;
+import com.audiorecorder.recorder.Fragments.TabFragment_Main;
 
 
 public class PagerAdapter extends FragmentStatePagerAdapter {

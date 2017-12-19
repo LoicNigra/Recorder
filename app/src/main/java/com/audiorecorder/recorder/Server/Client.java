@@ -1,5 +1,5 @@
 
-package com.audiorecorder.recorder;
+package com.audiorecorder.recorder.Server;
 
 import android.os.AsyncTask;
 import android.widget.TextView;

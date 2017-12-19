@@ -1,13 +1,11 @@
 
-package com.audiorecorder.recorder;
+package com.audiorecorder.recorder.Methodes;
 
 
 import android.os.AsyncTask;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import static com.audiorecorder.recorder.Opnemen.*;
 
 public class getAudio extends AsyncTask<String, Integer, ArrayList<String>> {
 
@@ -18,11 +16,11 @@ public class getAudio extends AsyncTask<String, Integer, ArrayList<String>> {
     protected ArrayList<String> doInBackground(String... strings) {
         audioList = new ArrayList<String>();
 
-        File f = new File(directory);
+        File f = new File(Opnemen.directory);
         File[] files = f.listFiles();
 
         for (int i = 0; i < files.length; i++) {
-            if (outFile.getName().endsWith(".3gpp")) {
+            if (Opnemen.outFile.getName().endsWith(".3gpp")) {
                 audioList.add(files[i].getName());
             }
         }

@@ -1,12 +1,12 @@
-package com.audiorecorder.recorder;
+package com.audiorecorder.recorder.Database;
 
 
-import static com.audiorecorder.recorder.Opnemen.*;
+import static com.audiorecorder.recorder.Methodes.Opnemen.*;
 
 public class AudioBestand {
 
-    String _title = _fileName;
-    int _id;
+    public String _title = _fileName;
+    public int _id;
 
     public AudioBestand(){
     }
@@ -16,10 +16,10 @@ public class AudioBestand {
         this._title = title;
     }
 
-    void setTitle(String title) {
+    public  void setTitle(String title) {
         this._title = title;
     }
-    String getTitle() {
+    public String getTitle() {
         return _title;
     }
 

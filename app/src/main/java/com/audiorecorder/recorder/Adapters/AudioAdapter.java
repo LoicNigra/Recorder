@@ -1,4 +1,4 @@
-package com.audiorecorder.recorder;
+package com.audiorecorder.recorder.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 
-import org.w3c.dom.Text;
+import com.audiorecorder.recorder.Database.AudioBestand;
+import com.audiorecorder.recorder.R;
 
 import java.util.ArrayList;
 
