@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
 
-    int aantTabs;
+    int aantTabs = 2;
 
     public PagerAdapter(FragmentManager fm, int tabs){
         super(fm);

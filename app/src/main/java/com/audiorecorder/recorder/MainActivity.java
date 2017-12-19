@@ -1,16 +1,13 @@
 package com.audiorecorder.recorder;
 
 import android.Manifest;
-import android.app.ActionBar;
-import android.app.FragmentTransaction;
-import android.app.Notification;
+import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
-import android.os.Environment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NotificationCompat;
@@ -18,187 +15,67 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TabHost;
-import android.widget.TableLayout;
+import android.widget.Button;
 import android.widget.Toast;
 
-// import static com.audiorecorder.recorder.Permissies.*;
+import static com.audiorecorder.recorder.Permissies.*;
 import static com.audiorecorder.recorder.Opnemen.*;
 import static com.audiorecorder.recorder.Stoppen.*;
 import static com.audiorecorder.recorder.Afspelen.*;
 import static com.audiorecorder.recorder.Variabelen.*;
-import static com.audiorecorder.recorder.TabFragment_Main.*;
-import android.widget.RelativeLayout;
+// import static com.audiorecorder.recorder.TabClick.*;
 
 
-import java.io.File;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static Context Maincontext;
+    static MainActivity mainActivity;
 
-    public static final String TAG = "MainActivity";
-    MyDBHandler dbHandler;
-    NotificationCompat.Builder notification;
+    static MyDBHandler dbHandler;
+    static NotificationCompat.Builder notification;
     private static final int uniqueID = 69;
+
+    public static Context getMainContext(){
+        return  MainActivity.Maincontext;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MainActivity.mainActivity = this;
+        MainActivity.Maincontext = getApplicationContext();
         Permissies();
         Tabs();
 
-        dbHandler = new MyDBHandler(this, null, null, 1);
-        notification = new NotificationCompat.Builder(this);
+
+
+       dbHandler = new MyDBHandler(this, null, null, 1);
+       notification = new NotificationCompat.Builder(this);
         //notification.setAutoCancel(true);  ==> NIET, Notification enkel weg wanneer opnemen gestopt
-
-    }
-
-    public void Klik(View view) {
-        switch (view.getId()) {
-            case R.id.opnemen:
-                try {
-                    opnemen();
-                    // Opslaan in DB
-                    AudioBestand audioBestand = new AudioBestand();
-                    dbHandler.addAudio(audioBestand);
-
-
-                    notification.setSmallIcon(R.drawable.logo);
-                    notification.setTicker("Recorder is aan het opnemen");
-                    notification.setWhen(System.currentTimeMillis());
-                    notification.setContentTitle("Recording");
-                    notification.setContentText("Recorder is aan het opnemen");
-
-                    //Intent vanuit een andere 'APP' naar deze te gaan
-                    Intent i = new Intent(this, MainActivity.class);
-                    PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
-                    notification.setContentIntent(pendingIntent);
-                    //Build Notification
-                    NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                    nm.notify(uniqueID, notification.build());
-
-                    Toast.makeText(getApplicationContext(), "Bezig met opnemen van opname " + teller, Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Er is een probleem opgetreden met het opnemen", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-                break;
-            case R.id.stoppen:
-                try {
-                    OpnemenStoppen();
-                    NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                    nm.cancel(uniqueID);
-                    Toast.makeText(getApplicationContext(), "Opname is gestopt van opname " + teller, Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Er is een probleem opgetreden het stoppen", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-                break;
-            case R.id.afspelen:
-                try {
-
-                    afspelen();
-                    Toast.makeText(getApplicationContext(), "Opname " + teller + " is aan het afspelen", Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-            case R.id.stopAfspelen:
-                try {
-                    AfspelenStoppen();
-                    Toast.makeText(getApplicationContext(), "Het afspelen van opname " + teller + " is gestopt", Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Er is een probleem opgetreden het afspelen te stoppen", Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
-                }
-                break;
-        }
+/*
+        Client myClient = new Client(serverAdress, serverPort, response);
+        myClient.execute();
+*/
     }
 
 
-    public boolean Permissies() {
-
-        int permissionRecord = ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO);
-        int permissionWrite = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        int permissionRead = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-        List<String> listPermissionsNeeded = new ArrayList<>();
-
-        if (permissionRecord != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.RECORD_AUDIO);
-        }
-        if (permissionWrite != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        }
-        if (permissionRead != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-        }
-
-        if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), REQUEST_ID_MULTIPLE_PERMISSIONS);
-            return false;
-        }
-
-        return true;
-    }
 
 
-    public void Tabs() {
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.Hoofdscherm));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.Bestanden));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        final PagerAdapter adapter = new PagerAdapter
-                (getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-
-                switch (tab.getPosition()) {
-                    case 0:
-                        onClick();
-                        break;
-                    case 1:
-                        onClick2();
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-    }
-
-    public void onClick() {
+    public void TabClick() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
-    public void onClick2() {
+    public void TabClick2() {
         Intent intent = new Intent(this, AudioActivity.class);
         startActivity(intent);
         finish();
@@ -245,6 +122,110 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+
+    public void Tabs() {
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.Hoofdscherm));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.Bestanden));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final PagerAdapter adapter = new PagerAdapter
+                (getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+
+                switch (tab.getPosition()) {
+                    case 0:
+                        TabClick();
+                        break;
+                    case 1:
+                        TabClick2();
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+    }
+
+
+    public void Klikken(View view) {
+        switch (view.getId()) {
+            case R.id.opnemen:
+                try {
+                    opnemen();
+                    // Opslaan in DB
+                    AudioBestand audioBestand = new AudioBestand();
+                    MainActivity.dbHandler.addAudio(audioBestand);
+
+                    notification.setSmallIcon(R.drawable.logo);
+                    notification.setTicker("Recorder is recording");
+                    notification.setWhen(System.currentTimeMillis());
+                    notification.setContentTitle("Recording");
+                    notification.setContentText("Recorder is recording");
+
+                    //Intent vanuit een andere 'APP' naar deze te gaan
+                    Intent i = new Intent(MainActivity.getMainContext(), MainActivity.class);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(mainActivity, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+                    notification.setContentIntent(pendingIntent);
+                    //Build Notification
+                    NotificationManager nm = (NotificationManager) MainActivity.getMainContext().getSystemService(NOTIFICATION_SERVICE);
+                    nm.notify(uniqueID, notification.build());
+
+                    Toast.makeText(MainActivity.getMainContext(), "Bezig met opnemen van opname " + teller, Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.getMainContext(), "Er is een probleem opgetreden met het opnemen", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.stoppen:
+                try {
+                    OpnemenStoppen();
+                    NotificationManager nm = (NotificationManager) MainActivity.getMainContext().getSystemService(NOTIFICATION_SERVICE);
+                    nm.cancel(uniqueID);
+                    Toast.makeText(MainActivity.getMainContext(), "Opname is gestopt van opname " + teller, Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.getMainContext(), "Er is een probleem opgetreden het stoppen", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.afspelen:
+                try {
+
+                    afspelen();
+                    Toast.makeText(MainActivity.getMainContext(), "Opname " + teller + " is aan het afspelen", Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.stopAfspelen:
+                try {
+                    AfspelenStoppen();
+                    Toast.makeText(MainActivity.getMainContext(), "Het afspelen van opname " + teller + " is gestopt", Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.getMainContext(), "Er is een probleem opgetreden het afspelen te stoppen", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+                break;
+        }
     }
 
 

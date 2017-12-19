@@ -30,22 +30,6 @@ public class getAudio extends AsyncTask<String, Integer, ArrayList<String>> {
     }
 
 
-/*
-    public static ArrayList<String> getAudio() {
-
-        audioList = new ArrayList<String>();
-
-        File f = new File(directory);
-        File[] files = f.listFiles();
-
-        for (int i = 0; i < files.length; i++) {
-            if (outFile.getName().endsWith(".3gpp")) {
-                audioList.add(files[i].getName());
-            }
-        }
-        return audioList;
-    }
-*/
 
 
 

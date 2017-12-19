@@ -47,6 +47,8 @@ public class AudioActivity extends AppCompatActivity {
 
     private static final String TAG = "AudioActivity";
 
+    public AudioActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +184,7 @@ public class AudioActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 
 
 }
