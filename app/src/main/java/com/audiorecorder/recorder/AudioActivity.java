@@ -5,6 +5,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.MediaPlayer;
@@ -39,22 +40,31 @@ import java.util.List;
 
 import static com.audiorecorder.recorder.Afspelen.afspelen;
 import static com.audiorecorder.recorder.Controle.*;
+import static com.audiorecorder.recorder.MainActivity.getMainContext;
+
 import static com.audiorecorder.recorder.getAudio.*;
 import static com.audiorecorder.recorder.Variabelen.*;
-import static com.audiorecorder.recorder.Opnemen.*;
+import static com.audiorecorder.recorder.LijstTonen.*;
 
 public class AudioActivity extends AppCompatActivity {
 
     private static final String TAG = "AudioActivity";
+    private static Context audioContext;
+    static AudioActivity audioActivity;
 
-    public AudioActivity() {
+
+    public static Context getAudioContext(){
+        return  AudioActivity.audioActivity;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_audio);
         Tabs();
+        AudioActivity.audioActivity = this;
+        AudioActivity.audioContext = getApplicationContext();
         LijstTonen();
     }
 
@@ -96,49 +106,14 @@ public class AudioActivity extends AppCompatActivity {
     }
 
 
-    @SuppressLint("NewApi")
-    public void LijstTonen() {
-
-        getAudio getaudio = new getAudio();
-        getaudio.doInBackground();
-
-        ListAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, audioList);
-        final ListView listView = (ListView) findViewById(R.id.AudioLijst);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        String audio = String.valueOf(parent.getItemAtPosition(position));
-                        try {
-                            StopMediaPlayer();
-                            mediaPlayer = new MediaPlayer();
-
-                            mediaPlayer.setDataSource(directory + audio);
-
-                            mediaPlayer.prepare();
-
-                            mediaPlayer.start();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        Toast.makeText(getApplicationContext(), audio, Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
-    }
-
     public void Tabs() {
 
-
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        TabLayout tabLayout =  findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText(R.string.Bestanden));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.Hoofdscherm));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final ViewPager viewPager = findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
@@ -151,10 +126,10 @@ public class AudioActivity extends AppCompatActivity {
 
                 switch (tab.getPosition()) {
                     case 0:
-                        onClick2();
+                        TabClick2();
                         break;
                     case 1:
-                        onClick();
+                        TabClick();
                         break;
                 }
             }
@@ -170,22 +145,19 @@ public class AudioActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
-    public void onClick() {
+    public void TabClick() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
 
-    public void onClick2() {
+    public void TabClick2() {
         Intent intent = new Intent(this, AudioActivity.class);
         startActivity(intent);
         finish();
     }
-
-
 
 }
 

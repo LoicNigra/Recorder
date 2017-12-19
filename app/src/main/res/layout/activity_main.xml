@@ -30,7 +30,7 @@
         android:layout_below="@+id/logo"
         android:layout_marginEnd="12dp"
         android:layout_marginRight="12dp"
-        android:onClick="Klikken"
+        android:onClick="Klik"
         android:text="@string/Opnemen"
         android:textSize="30sp" />
 
@@ -44,7 +44,7 @@
         android:layout_marginEnd="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:onClick="Klikken"
+        android:onClick="Klik"
         android:text="@string/Stoppen"
         android:textSize="30sp" />
 
@@ -59,7 +59,7 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginStart="12dp"
-        android:onClick="Klikken"
+        android:onClick="Klik"
         android:text="@string/Afspelen"
         android:textSize="30sp" />
 
@@ -73,7 +73,7 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginStart="12dp"
-        android:onClick="Klikken"
+        android:onClick="Klik"
         android:text="@string/StopAfspelen"
         android:textSize="30sp"
         tools:text="Stop Afspelen" />

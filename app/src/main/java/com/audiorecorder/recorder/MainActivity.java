@@ -21,10 +21,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import static com.audiorecorder.recorder.AudioActivity.audioActivity;
+import static com.audiorecorder.recorder.AudioActivity.getAudioContext;
 import static com.audiorecorder.recorder.Permissies.*;
 import static com.audiorecorder.recorder.Opnemen.*;
 import static com.audiorecorder.recorder.Stoppen.*;
 import static com.audiorecorder.recorder.Afspelen.*;
+
 import static com.audiorecorder.recorder.Variabelen.*;
 // import static com.audiorecorder.recorder.TabClick.*;
 
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     public static Context getMainContext(){
         return  MainActivity.Maincontext;
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,17 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void TabClick() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
-    public void TabClick2() {
-        Intent intent = new Intent(this, AudioActivity.class);
-        startActivity(intent);
-        finish();
-    }
+
+
+
 
 
     @Override
@@ -127,12 +124,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void Tabs() {
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        TabLayout tabLayout =  findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText(R.string.Hoofdscherm));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.Bestanden));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        final ViewPager viewPager = findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
@@ -167,7 +164,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void Klikken(View view) {
+    public void TabClick() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void TabClick2() {
+        Intent intent = new Intent(this, AudioActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void Klik(View view) {
         switch (view.getId()) {
             case R.id.opnemen:
                 try {
@@ -227,7 +236,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
-
 
 
 }

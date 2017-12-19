@@ -4,7 +4,7 @@
     android:id="@+id/main_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.audiorecorder.recorder.Klik">
+    tools:context="com.audiorecorder.recorder.MainActivity">
 
 
     <LinearLayout
@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
                 android:layout_weight="1"
-                android:onClick="Klikken"
+                android:onClick="Klik"
                 android:text="@string/Opnemen"
                 android:textSize="30sp" />
 
@@ -38,7 +38,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_weight="1"
-                android:onClick="Klikken"
+                android:onClick="Klik"
                 android:text="@string/Stoppen"
                 android:textSize="30sp" />
         </LinearLayout>
@@ -60,7 +60,7 @@
                 android:layout_marginRight="12dp"
                 android:layout_marginStart="12dp"
                 android:layout_weight="1"
-                android:onClick="Klikken"
+                android:onClick="Klik"
                 android:text="@string/Afspelen"
                 android:textSize="30sp" />
 
@@ -74,7 +74,7 @@
                 android:layout_marginRight="12dp"
                 android:layout_marginStart="12dp"
                 android:layout_weight="1"
-                android:onClick="Klikken"
+                android:onClick="Klik"
                 android:text="@string/StopAfspelen"
                 android:textSize="25sp"
                 tools:text="Stop Afspelen" />
