@@ -1,5 +1,6 @@
 package com.audiorecorder.recorder.Activities;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
@@ -8,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.audiorecorder.recorder.Adapters.PagerAdapter;
 import com.audiorecorder.recorder.R;
@@ -66,13 +69,31 @@ public class AudioActivity extends AppCompatActivity {
                 return true;
 
             case R.id.Quit:
+                NotificationManager nm = (NotificationManager) MainActivity.getMainContext().getSystemService(NOTIFICATION_SERVICE);
+                nm.cancel(MainActivity.uniqueID);
                 System.exit(0);
+
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    @Override
+    public void onBackPressed(){
+        RelativeLayout mainRelative = (RelativeLayout) findViewById(R.id.main_view);
+        RelativeLayout audioRelative = (RelativeLayout) findViewById(R.id.audio_view);
+        if(audioRelative != null && audioRelative.getVisibility() == View.VISIBLE){
+            audioRelative.setVisibility(View.GONE);
+            finish();
+        } else if (mainRelative != null && mainRelative.getVisibility() == View.VISIBLE) {
+            mainRelative.setVisibility(View.GONE);
+            finish();
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
 
     public void Tabs() {
 

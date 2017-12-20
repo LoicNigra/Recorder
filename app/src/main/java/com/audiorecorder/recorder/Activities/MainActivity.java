@@ -7,19 +7,28 @@ import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.audiorecorder.recorder.Database.AudioBestand;
 import com.audiorecorder.recorder.Database.MyDBHandler;
 import com.audiorecorder.recorder.Adapters.PagerAdapter;
-// import com.audiorecorder.recorder.Methodes.onClick;
+// import com.audiorecorder.recorder.Methodes.Klik;
 import com.audiorecorder.recorder.R;
+
+import org.w3c.dom.Text;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.audiorecorder.recorder.Methodes.Permissies.*;
 import static com.audiorecorder.recorder.Methodes.Opnemen.*;
@@ -36,13 +45,14 @@ public class MainActivity extends AppCompatActivity {
 
     public static MyDBHandler dbHandler;
     public static NotificationCompat.Builder notification;
-    private static final int uniqueID = 69;
+    public static final int uniqueID = 69;
 
-    public static Button btnOpnemen, btnStoppen, btnAfspelen, btnAfspelenStoppen;
-
+    public Timer timer;
     public static Context getMainContext(){
         return  MainActivity.Maincontext;
     }
+
+    private TextView tv;
 
 
     @Override
@@ -54,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
         Permissies();
         Tabs();
 
-
-
        dbHandler = new MyDBHandler(this, null, null, 1);
        notification = new NotificationCompat.Builder(this);
         //notification.setAutoCancel(true);  ==> NIET, Notification enkel weg wanneer opnemen gestopt
@@ -63,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
         Client myClient = new Client(serverAdress, serverPort, response);
         myClient.execute();
 */
+
+        tv = (TextView) findViewById(R.id.timerView);
+        tv.setVisibility(View.GONE);
+
+
     }
 
 
@@ -98,7 +111,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.Quit:
+                NotificationManager nm = (NotificationManager) MainActivity.getMainContext().getSystemService(NOTIFICATION_SERVICE);
+                nm.cancel(MainActivity.uniqueID);
                System.exit(0);
+
 
             default:
                 return  super.onOptionsItemSelected(item);
@@ -109,6 +125,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed(){
+        RelativeLayout mainRelative = (RelativeLayout) findViewById(R.id.main_view);
+        RelativeLayout audioRelative = (RelativeLayout) findViewById(R.id.audio_view);
+        if(audioRelative != null && audioRelative.getVisibility() == View.VISIBLE){
+            audioRelative.setVisibility(View.GONE);
+            finish();
+        } else if (mainRelative != null && mainRelative.getVisibility() == View.VISIBLE) {
+                mainRelative.setVisibility(View.GONE);
+                finish();
+            }
+        else {
+            super.onBackPressed();
+        }
+    }
 
     public void Tabs() {
 
@@ -151,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public void TabClick() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -187,6 +217,33 @@ public class MainActivity extends AppCompatActivity {
                     NotificationManager nm = (NotificationManager) MainActivity.getMainContext().getSystemService(NOTIFICATION_SERVICE);
                     nm.notify(uniqueID, notification.build());
 
+                    timer = new Timer();
+                    timer.scheduleAtFixedRate(new TimerTask() {
+                        @Override
+                        public void run() {
+                            runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    tv.setVisibility(View.VISIBLE);
+                                    ImageView logo = (ImageView) findViewById(R.id.logo);
+                                    logo.setVisibility(View.INVISIBLE);
+
+                                    tv.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds));
+                                    seconds++;
+
+                                    if (seconds == 60) {
+                                        tv.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds));
+                                        seconds = 0;
+                                        minutes = minutes + 1;
+                                    }
+                                }
+                            });
+                        }
+                    }, 0, 1000);
+
+
+
                     Toast.makeText(MainActivity.getMainContext(), "Bezig met opnemen van opname " + teller, Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     Toast.makeText(MainActivity.getMainContext(), "Er is een probleem opgetreden met het opnemen", Toast.LENGTH_LONG).show();
@@ -198,6 +255,15 @@ public class MainActivity extends AppCompatActivity {
                     OpnemenStoppen();
                     NotificationManager nm = (NotificationManager) MainActivity.getMainContext().getSystemService(NOTIFICATION_SERVICE);
                     nm.cancel(uniqueID);
+
+                if(timer != null) {
+                    timer.cancel();
+                    ImageView logo = (ImageView) findViewById(R.id.logo);
+                    logo.setVisibility(View.VISIBLE);
+                    tv.setVisibility(View.INVISIBLE);
+                    minutes = 0;
+                    seconds = 0;
+                }
                     Toast.makeText(MainActivity.getMainContext(), "Opname is gestopt van opname " + teller, Toast.LENGTH_LONG).show();
                 } catch (Exception e) {
                     Toast.makeText(MainActivity.getMainContext(), "Er is een probleem opgetreden het stoppen", Toast.LENGTH_LONG).show();
@@ -224,7 +290,6 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
-
 
 }
 

@@ -20,7 +20,7 @@ public class getAudio extends AsyncTask<String, Integer, ArrayList<String>> {
         File[] files = f.listFiles();
 
         for (int i = 0; i < files.length; i++) {
-            if (Opnemen.outFile.getName().endsWith(".3gpp")) {
+            if (files[i].getName().endsWith(".3gpp")) {
                 audioList.add(files[i].getName());
             }
         }
