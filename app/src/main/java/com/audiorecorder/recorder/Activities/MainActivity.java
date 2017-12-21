@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-/*
+
 // Wanneer switch weg doen => Dan werkt tabs, maar veranderd activity niet
                 switch (tab.getPosition()) {
                     case 0:
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
                         TabClick2();
                         break;
                 }
-*/
+
             }
 
             @Override
