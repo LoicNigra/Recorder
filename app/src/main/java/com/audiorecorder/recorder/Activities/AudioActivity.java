@@ -108,11 +108,13 @@ public class AudioActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-
+/*
+// Wanneer switch weg doen => Dan werkt tabs, maar veranderd activity niet
                 switch (tab.getPosition()) {
                     case 0:
                         TabClick2();
@@ -121,6 +123,7 @@ public class AudioActivity extends AppCompatActivity {
                         TabClick();
                         break;
                 }
+*/
             }
 
             @Override
@@ -147,6 +150,8 @@ public class AudioActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
 
 }
 

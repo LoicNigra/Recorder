@@ -7,13 +7,11 @@ import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,15 +23,15 @@ import com.audiorecorder.recorder.Adapters.PagerAdapter;
 // import com.audiorecorder.recorder.Methodes.Klik;
 import com.audiorecorder.recorder.R;
 
-import org.w3c.dom.Text;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.audiorecorder.recorder.Activities.AudioActivity.getAudioContext;
 import static com.audiorecorder.recorder.Methodes.Permissies.*;
 import static com.audiorecorder.recorder.Methodes.Opnemen.*;
 import static com.audiorecorder.recorder.Methodes.Stoppen.*;
 import static com.audiorecorder.recorder.Methodes.Afspelen.*;
+// import static com.audiorecorder.recorder.Activities.AudioActivity;
 
 // import static com.audiorecorder.recorder.TabClick.*;
 
@@ -53,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private TextView tv;
-
+    private ImageView logo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
        dbHandler = new MyDBHandler(this, null, null, 1);
        notification = new NotificationCompat.Builder(this);
-        //notification.setAutoCancel(true);  ==> NIET, Notification enkel weg wanneer opnemen gestopt
 /*
         Client myClient = new Client(serverAdress, serverPort, response);
         myClient.execute();
@@ -74,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         tv = (TextView) findViewById(R.id.timerView);
         tv.setVisibility(View.GONE);
+        logo = (ImageView) findViewById(R.id.logo);
 
 
     }
@@ -154,11 +152,12 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-
+/*
+// Wanneer switch weg doen => Dan werkt tabs, maar veranderd activity niet
                 switch (tab.getPosition()) {
                     case 0:
                         TabClick();
@@ -167,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
                         TabClick2();
                         break;
                 }
+*/
             }
 
             @Override
@@ -192,6 +192,33 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AudioActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void onTabSelectedListener(final ViewPager viewPager){
+        new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 0) {
+                    Intent intent = new Intent(getMainContext(), MainActivity.class);
+                    startActivity(intent);
+                }
+                if (tab.getPosition() == 1) {
+                    Intent intent = new Intent(getAudioContext(), AudioActivity.class);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        };
     }
 
     public void Klik(View view) {
@@ -226,9 +253,7 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     tv.setVisibility(View.VISIBLE);
-                                    ImageView logo = (ImageView) findViewById(R.id.logo);
                                     logo.setVisibility(View.INVISIBLE);
-
                                     tv.setText(String.valueOf(minutes) + ":" + String.valueOf(seconds));
                                     seconds++;
 
@@ -258,7 +283,6 @@ public class MainActivity extends AppCompatActivity {
 
                 if(timer != null) {
                     timer.cancel();
-                    ImageView logo = (ImageView) findViewById(R.id.logo);
                     logo.setVisibility(View.VISIBLE);
                     tv.setVisibility(View.INVISIBLE);
                     minutes = 0;

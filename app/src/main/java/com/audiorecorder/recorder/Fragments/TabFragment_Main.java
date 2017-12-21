@@ -8,7 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.audiorecorder.recorder.Activities.MainActivity;
 import com.audiorecorder.recorder.R;
+
+import static com.audiorecorder.recorder.Activities.MainActivity.getMainContext;
 
 public class TabFragment_Main extends Fragment {
 
@@ -18,6 +21,7 @@ public class TabFragment_Main extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.tab_fragment_main, container, false);
         return view;
+
 
     }
 }

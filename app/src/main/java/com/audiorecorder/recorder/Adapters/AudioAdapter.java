@@ -1,4 +1,6 @@
+/*
 package com.audiorecorder.recorder.Adapters;
+
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -48,13 +50,7 @@ public class AudioAdapter extends BaseAdapter {
 
         title.setText(audioBestand.getTitle());
 
-        view.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                //LOGICA VOOR AFSPELEN
-            }
-        });
         return view;
     }
 }
+*/

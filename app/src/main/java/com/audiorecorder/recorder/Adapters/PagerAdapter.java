@@ -17,6 +17,10 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         this.aantTabs = tabs;
     }
 
+    public PagerAdapter(FragmentManager fm){
+        super(fm);
+    }
+
 
     @Override
     public Fragment getItem(int position) {

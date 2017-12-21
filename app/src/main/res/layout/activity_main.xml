@@ -30,7 +30,11 @@
         android:layout_alignParentTop="true"
         android:layout_below="@+id/tab_layout"
         android:layout_marginTop="100dp"
-        android:padding="30dp"
+        android:lineSpacingExtra="14sp"
+        android:textAlignment="center"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:typeface="sans"
         tools:text="TextView" />
 
     <Button
@@ -94,7 +98,8 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></android.support.design.widget.TabLayout>
+        android:layout_height="wrap_content"
+        app:tabIndicatorColor="@android:color/holo_red_dark"></android.support.design.widget.TabLayout>
 <!--
     <fragment
         android:id="@+id/fragment"
@@ -107,6 +112,7 @@
         android:layout_alignParentTop="true"
         tools:layout="@layout/tab_fragment_main" />
 -->
+
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
