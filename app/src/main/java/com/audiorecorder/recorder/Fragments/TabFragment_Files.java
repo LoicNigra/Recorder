@@ -18,7 +18,6 @@ public class TabFragment_Files extends Fragment {
     public static final String FRAGMENT_TAG = "Files";
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.tab_fragment_files, container, false);

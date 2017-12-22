@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.RelativeLayout;
 import com.audiorecorder.recorder.Adapters.PagerAdapter;
 import com.audiorecorder.recorder.R;
 
+import static com.audiorecorder.recorder.Activities.MainActivity.getMainContext;
 import static com.audiorecorder.recorder.Methodes.LijstTonen.*;
 
 public class AudioActivity extends AppCompatActivity {
@@ -69,7 +71,7 @@ public class AudioActivity extends AppCompatActivity {
                 return true;
 
             case R.id.Quit:
-                NotificationManager nm = (NotificationManager) MainActivity.getMainContext().getSystemService(NOTIFICATION_SERVICE);
+                NotificationManager nm = (NotificationManager) getMainContext().getSystemService(NOTIFICATION_SERVICE);
                 nm.cancel(MainActivity.uniqueID);
                 System.exit(0);
 
@@ -114,13 +116,16 @@ public class AudioActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
 
+
 // Wanneer switch weg doen => Dan werkt tabs, maar veranderd activity niet
                 switch (tab.getPosition()) {
                     case 0:
                         TabClick2();
+                        Log.i("MainActivity", "Main Activity clicked");
                         break;
                     case 1:
-                        TabClick();
+                          TabClick();
+                        Log.i("AudioActivity", "Audio Activity clicked");
                         break;
                 }
 
@@ -142,13 +147,13 @@ public class AudioActivity extends AppCompatActivity {
     public void TabClick() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        finish();
+
     }
 
     public void TabClick2() {
         Intent intent = new Intent(this, AudioActivity.class);
         startActivity(intent);
-        finish();
+
     }
 
 

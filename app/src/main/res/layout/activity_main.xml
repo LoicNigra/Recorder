@@ -24,12 +24,11 @@
     <TextView
         android:id="@+id/timerView"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_below="@+id/tab_layout"
-        android:layout_marginTop="100dp"
+        android:layout_below="@+id/logo"
+        android:layout_marginBottom="43dp"
         android:lineSpacingExtra="14sp"
         android:textAlignment="center"
         android:textSize="50sp"
@@ -41,27 +40,13 @@
         android:id="@+id/opnemen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/stoppen"
-        android:layout_alignStart="@+id/stoppen"
-        android:layout_below="@+id/logo"
+        android:layout_alignLeft="@+id/afspelen"
+        android:layout_alignStart="@+id/afspelen"
+        android:layout_below="@+id/timerView"
         android:layout_marginEnd="12dp"
         android:layout_marginRight="12dp"
         android:onClick="Klik"
         android:text="@string/Opnemen"
-        android:textSize="30sp" />
-
-    <Button
-        android:id="@+id/stoppen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/afspelen"
-        android:layout_alignStart="@+id/afspelen"
-        android:layout_below="@+id/opnemen"
-        android:layout_marginEnd="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:onClick="Klik"
-        android:text="@string/Stoppen"
         android:textSize="30sp" />
 
 
@@ -69,7 +54,7 @@
         android:id="@+id/afspelen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/stoppen"
+        android:layout_below="@+id/opnemen"
         android:layout_centerHorizontal="true"
         android:layout_marginEnd="12dp"
         android:layout_marginLeft="12dp"
@@ -78,21 +63,6 @@
         android:onClick="Klik"
         android:text="@string/Afspelen"
         android:textSize="30sp" />
-
-    <Button
-        android:id="@+id/stopAfspelen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/afspelen"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginStart="12dp"
-        android:onClick="Klik"
-        android:text="@string/StopAfspelen"
-        android:textSize="30sp"
-        tools:text="Stop Afspelen" />
 
 
     <android.support.design.widget.TabLayout
@@ -116,7 +86,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/tab_layout"/>
+        android:layout_height="match_parent"
+        android:layout_below="@id/tab_layout" />
 
 </RelativeLayout>
