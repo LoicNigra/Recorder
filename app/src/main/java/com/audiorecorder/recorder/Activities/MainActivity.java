@@ -1,5 +1,7 @@
 package com.audiorecorder.recorder.Activities;
 
+
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -43,8 +45,9 @@ import static com.audiorecorder.recorder.Methodes.Stoppen.OpnemenStoppen;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    @SuppressLint("StaticFieldLeak")
     public static Context Maincontext;
+    @SuppressLint("StaticFieldLeak")
     public static MainActivity mainActivity;
 
     public static MyDBHandler dbHandler;
@@ -58,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private TextView tv;
-    private ImageView logo;
+
 
     public Intent i;
     private Button opnemenKnop;
@@ -81,13 +84,12 @@ public class MainActivity extends AppCompatActivity {
         myClient.execute();
 */
 
-        tv = (TextView) findViewById(R.id.timerView);
+        tv = findViewById(R.id.timerView);
         tv.setVisibility(View.INVISIBLE);
-        logo = (ImageView) findViewById(R.id.logo);
+
 
         opnemenKnop = (Button) findViewById(R.id.opnemen);
         opnemenKnop.setTag(1);
-        //   opnemenKnop.setText("opnemen");
 
         afspelenKnop = (Button) findViewById(R.id.afspelen);
         afspelenKnop.setTag(1);
@@ -128,7 +130,9 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.Quit:
                 NotificationManager nm = (NotificationManager) MainActivity.getMainContext().getSystemService(NOTIFICATION_SERVICE);
-                nm.cancel(MainActivity.uniqueID);
+                if (nm != null) {
+                    nm.cancel(MainActivity.uniqueID);
+                }
                 System.exit(0);
 
 
@@ -144,10 +148,10 @@ public class MainActivity extends AppCompatActivity {
         RelativeLayout mainRelative = (RelativeLayout) findViewById(R.id.main_view);
         RelativeLayout audioRelative = (RelativeLayout) findViewById(R.id.audio_view);
         if (audioRelative != null && audioRelative.getVisibility() == View.VISIBLE) {
-            audioRelative.setVisibility(View.GONE);
+            audioRelative.setVisibility(View.INVISIBLE);
             finish();
         } else if (mainRelative != null && mainRelative.getVisibility() == View.VISIBLE) {
-            mainRelative.setVisibility(View.GONE);
+            mainRelative.setVisibility(View.INVISIBLE);
             finish();
         } else {
             super.onBackPressed();
@@ -217,33 +221,6 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    private void onTabSelectedListener(final ViewPager viewPager) {
-        new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
-                if (tab.getPosition() == 0) {
-                    Intent intent = new Intent(getMainContext(), MainActivity.class);
-                    startActivity(intent);
-                }
-                if (tab.getPosition() == 1) {
-                    Intent intent = new Intent(getAudioContext(), AudioActivity.class);
-                    startActivity(intent);
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        };
-    }
-
     public void Klik(View view) {
 
         switch (view.getId()) {
@@ -273,7 +250,9 @@ public class MainActivity extends AppCompatActivity {
                         notification.setContentIntent(pendingIntent);
                         //Build Notification
                         NotificationManager nm = (NotificationManager) MainActivity.getMainContext().getSystemService(NOTIFICATION_SERVICE);
-                        nm.notify(uniqueID, notification.build());
+                        if (nm != null) {
+                            nm.notify(uniqueID, notification.build());
+                        }
 
                         timer = new Timer();
                         timer.scheduleAtFixedRate(new TimerTask() {
@@ -281,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
                             public void run() {
                                 runOnUiThread(new Runnable() {
 
+                                    @SuppressLint("SetTextI18n")
                                     @Override
                                     public void run() {
                                         tv.setVisibility(View.VISIBLE);
@@ -305,7 +285,9 @@ public class MainActivity extends AppCompatActivity {
                         opnemenKnop.setText(R.string.Opnemen);
                         view.setTag(1);
                         NotificationManager nm = (NotificationManager) MainActivity.getMainContext().getSystemService(NOTIFICATION_SERVICE);
-                        nm.cancel(uniqueID);
+                        if (nm != null) {
+                            nm.cancel(uniqueID);
+                        }
 
                         if (timer != null) {
                             timer.cancel();

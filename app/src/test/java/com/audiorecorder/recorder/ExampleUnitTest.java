@@ -1,7 +1,12 @@
 package com.audiorecorder.recorder;
 
+import android.app.NotificationManager;
+
+import com.audiorecorder.recorder.Activities.MainActivity;
+
 import org.junit.Test;
 
+import static com.audiorecorder.recorder.Activities.MainActivity.*;
 import static com.audiorecorder.recorder.Methodes.Opnemen.*;
 import static org.junit.Assert.*;
 
@@ -26,4 +31,14 @@ public class ExampleUnitTest {
         }
 
     }
+    @Test
+    public void notification() throws Exception {
+        NotificationManager nm = (NotificationManager) MainActivity.getMainContext().getSystemService(NOTIFICATION_SERVICE);
+
+      if(nm != null) {
+          nm.notify(uniqueID, notification.build());
+          assertEquals(69, 0);
+      }
+    }
+
 }
