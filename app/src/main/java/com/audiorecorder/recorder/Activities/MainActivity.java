@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,24 +23,16 @@ import android.widget.Toast;
 import com.audiorecorder.recorder.Database.AudioBestand;
 import com.audiorecorder.recorder.Database.MyDBHandler;
 import com.audiorecorder.recorder.Adapters.PagerAdapter;
-// import com.audiorecorder.recorder.Methodes.Klik;
-import com.audiorecorder.recorder.Fragments.TabFragment_Files;
 import com.audiorecorder.recorder.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.audiorecorder.recorder.Activities.AudioActivity.getAudioContext;
-import static com.audiorecorder.recorder.Methodes.Controle.StopMediaPlayer;
-import static com.audiorecorder.recorder.Methodes.Controle.StopMediarecorder;
 import static com.audiorecorder.recorder.Methodes.Permissies.*;
 import static com.audiorecorder.recorder.Methodes.Opnemen.*;
 import static com.audiorecorder.recorder.Methodes.Stoppen.*;
 import static com.audiorecorder.recorder.Methodes.Afspelen.*;
 import static com.audiorecorder.recorder.Methodes.Stoppen.OpnemenStoppen;
-// import static com.audiorecorder.recorder.Activities.AudioActivity;
-
-// import static com.audiorecorder.recorder.TabClick.*;
 
 
 public class MainActivity extends AppCompatActivity {
