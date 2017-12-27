@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Process;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
@@ -28,6 +29,7 @@ import com.audiorecorder.recorder.R;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.audiorecorder.recorder.Activities.AudioActivity.*;
 import static com.audiorecorder.recorder.Methodes.Permissies.*;
 import static com.audiorecorder.recorder.Methodes.Opnemen.*;
 import static com.audiorecorder.recorder.Methodes.Stoppen.*;
@@ -124,7 +126,9 @@ public class MainActivity extends AppCompatActivity {
                 if (nm != null) {
                     nm.cancel(MainActivity.uniqueID);
                 }
-                System.exit(0);
+                audioActivity.finish();
+                this.finish();
+
 
 
             default:
@@ -133,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 
     @Override
     public void onBackPressed() {

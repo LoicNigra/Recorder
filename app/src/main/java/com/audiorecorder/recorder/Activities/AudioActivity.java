@@ -12,11 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.os.Process;
 
 import com.audiorecorder.recorder.Adapters.PagerAdapter;
 import com.audiorecorder.recorder.R;
 
-import static com.audiorecorder.recorder.Activities.MainActivity.getMainContext;
+import static com.audiorecorder.recorder.Activities.MainActivity.*;
 import static com.audiorecorder.recorder.Methodes.LijstTonen.*;
 
 public class AudioActivity extends AppCompatActivity {
@@ -73,13 +74,16 @@ public class AudioActivity extends AppCompatActivity {
             case R.id.Quit:
                 NotificationManager nm = (NotificationManager) getMainContext().getSystemService(NOTIFICATION_SERVICE);
                 nm.cancel(MainActivity.uniqueID);
-                System.exit(0);
+                mainActivity.finish();
+                this.finish();
 
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 
     @Override
     public void onBackPressed(){
