@@ -4,50 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+
 </RelativeLayout>
-
-
-
-
-
-
-
-
-
-
-
-<!-- <?xml version="1.0" encoding="utf-8"?>
-
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tabs_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_Layout"
-        android:layout_width="match_parent"
-        android:layout_height="59dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
-
-        <android.support.design.widget.TabItem
-            android:id="@+id/Main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Hoofdscherm" />
-
-        <android.support.design.widget.TabItem
-            android:id="@+id/Files"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Bestanden" />
-
-    </android.support.design.widget.TabLayout>
-</RelativeLayout>
-
--->
-
-

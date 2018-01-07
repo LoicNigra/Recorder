@@ -43,7 +43,6 @@
         android:layout_below="@id/tab_layout"/>
 
     <!--
-
     <fragment
         android:id="@+id/fragment"
         android:nacom.audiorecorder.recorder.Fragments.TabFragment_MainMain"
@@ -54,8 +53,4 @@
         android:layout_alignParentTop="true"
         tools:layout="@layout/tab_fragment_main" />
     -->
-
-
-
-
 </RelativeLayout>

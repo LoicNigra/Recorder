@@ -34,7 +34,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    //Add new row to the database
+
     public void addAudio(AudioBestand audioBestand){
         ContentValues values = new ContentValues();
         values.put(COLUMN_FILENAME, audioBestand.getTitle());
@@ -44,14 +44,12 @@ public class MyDBHandler extends SQLiteOpenHelper {
     }
 
 
-    //Delete van database
     public void deleteAudio(String audioName){
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("DELETE FROM " + TABLE_AUDIO + " WHERE " + COLUMN_FILENAME + "=\""+audioName + "\";");
     }
 
 
-    //Print db as string
     public String databaseToString(){
         String dbString = "";
         SQLiteDatabase db = getWritableDatabase();
@@ -68,6 +66,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
             }
         }
         db.close();
+        c.close();
         return dbString;
     }
 

@@ -6,13 +6,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Process;
+
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +25,8 @@ import com.audiorecorder.recorder.Database.AudioBestand;
 import com.audiorecorder.recorder.Database.MyDBHandler;
 import com.audiorecorder.recorder.Adapters.PagerAdapter;
 import com.audiorecorder.recorder.R;
+import com.audiorecorder.recorder.Server.Client;
+
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,6 +37,7 @@ import static com.audiorecorder.recorder.Methodes.Opnemen.*;
 import static com.audiorecorder.recorder.Methodes.Stoppen.*;
 import static com.audiorecorder.recorder.Methodes.Afspelen.*;
 import static com.audiorecorder.recorder.Methodes.Stoppen.OpnemenStoppen;
+import static com.audiorecorder.recorder.Server.Client.*;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -72,20 +75,20 @@ public class MainActivity extends AppCompatActivity {
 
         dbHandler = new MyDBHandler(this, null, null, 1);
         notification = new NotificationCompat.Builder(this);
-/*
-        Client myClient = new Client(serverAdress, serverPort, response);
-        myClient.execute();
-*/
+
 
         tv = findViewById(R.id.timerView);
         tv.setVisibility(View.INVISIBLE);
 
 
-        opnemenKnop = (Button) findViewById(R.id.opnemen);
+        opnemenKnop =  findViewById(R.id.opnemen);
         opnemenKnop.setTag(1);
 
-        afspelenKnop = (Button) findViewById(R.id.afspelen);
+        afspelenKnop =  findViewById(R.id.afspelen);
         afspelenKnop.setTag(1);
+
+        Client myClient = new Client(serverAdress, serverPort, response);
+        myClient.execute();
 
 
     }
@@ -126,10 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 if (nm != null) {
                     nm.cancel(MainActivity.uniqueID);
                 }
-                audioActivity.finish();
-                this.finish();
-
-
+                this.finishAffinity();
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -138,12 +138,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     @Override
     public void onBackPressed() {
-        RelativeLayout mainRelative = (RelativeLayout) findViewById(R.id.main_view);
-        RelativeLayout audioRelative = (RelativeLayout) findViewById(R.id.audio_view);
+        RelativeLayout mainRelative =  findViewById(R.id.main_view);
+        RelativeLayout audioRelative = findViewById(R.id.audio_view);
         if (audioRelative != null && audioRelative.getVisibility() == View.VISIBLE) {
             audioRelative.setVisibility(View.INVISIBLE);
             finish();
@@ -157,10 +155,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void Tabs() {
 
+
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText(R.string.Hoofdscherm));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.Bestanden));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
 
         final ViewPager viewPager = findViewById(R.id.pager);
         final PagerAdapter adapter = new PagerAdapter
@@ -173,21 +173,12 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
 
-
-// Wanneer switch weg doen => Dan werkt tabs, maar veranderd activity niet
                 switch (tab.getPosition()) {
                     case 0:
                         TabClick();
-                        Log.i("MainActivity", "Main Activity clicked");
-                        i = new Intent(getBaseContext(), MainActivity.class);
-                        viewPager.setCurrentItem(tab.getPosition());
-                        startActivity(i);
-
                         break;
                     case 1:
                         TabClick2();
-                        Log.i("AudioActivity", "Audio Activity clicked");
-
                         break;
                 }
 
@@ -229,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
                     if (statusOpnemen == 1) {
                         opnemen();
                         opnemenKnop.setText(R.string.Stoppen);
+                        afspelenKnop.setEnabled(false);
                         view.setTag(0);
 
                         // Opslaan in DB
@@ -280,6 +272,7 @@ public class MainActivity extends AppCompatActivity {
                         OpnemenStoppen();
                         tv.setVisibility(View.INVISIBLE);
                         opnemenKnop.setText(R.string.Opnemen);
+                        afspelenKnop.setEnabled(true);
                         view.setTag(1);
                         NotificationManager nm = (NotificationManager) MainActivity.getMainContext().getSystemService(NOTIFICATION_SERVICE);
                         if (nm != null) {
@@ -311,12 +304,14 @@ public class MainActivity extends AppCompatActivity {
 
                         afspelen();
                         afspelenKnop.setText(R.string.StopAfspelen);
+                        opnemenKnop.setEnabled(false);
                         view.setTag(0);
                         Toast.makeText(MainActivity.getMainContext(), "Opname " + teller + " is aan het afspelen", Toast.LENGTH_LONG).show();
                     } else {
 
                         AfspelenStoppen();
                         afspelenKnop.setText(R.string.Afspelen);
+                        opnemenKnop.setEnabled(true);
                         view.setTag(1);
                         Toast.makeText(MainActivity.getMainContext(), "Het afspelen van opname " + teller + " is gestopt", Toast.LENGTH_LONG).show();
                     }

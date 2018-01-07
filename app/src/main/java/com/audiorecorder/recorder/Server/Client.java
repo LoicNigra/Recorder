@@ -12,12 +12,12 @@ import java.net.UnknownHostException;
 
 public class Client extends AsyncTask<Void, Void, String> {
 
-    private static String serverAdress;
-    private static int serverPort = 8080;
-    private static  String response = "";
-    private static TextView textResponse;
+    public static String serverAdress;
+    public static int serverPort = 21;
+    public static  String response = " ";
+    public static TextView textResponse;
 
-    Client(String addr, int port, String responses) {
+    public Client(String addr, int port, String responses) {
         serverAdress = "\\\\dt-srv-file1.ehb.local\\Studentenhomes\\loic.nigra";
         serverPort = port;
         response = responses;
@@ -66,12 +66,12 @@ public class Client extends AsyncTask<Void, Void, String> {
         }
         return response;
     }
-
+/*
     @Override
     protected void onPostExecute(String result) {
         textResponse.setText(response);
         super.onPostExecute(result);
     }
-
+*/
 }
 

@@ -1,3 +1,4 @@
+
 package com.audiorecorder.recorder.Fragments;
 
 import android.content.Intent;
@@ -24,11 +25,5 @@ public class TabFragment_Files extends Fragment {
         return view;
 
     }
-
-
-/*
-
-
-*/
 
 }

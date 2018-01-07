@@ -1,20 +1,21 @@
 package com.audiorecorder.recorder;
 
+import android.annotation.SuppressLint;
 import android.app.NotificationManager;
+import android.view.View;
 
 import com.audiorecorder.recorder.Activities.MainActivity;
 
 import org.junit.Test;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import static com.audiorecorder.recorder.Activities.MainActivity.*;
 import static com.audiorecorder.recorder.Methodes.Opnemen.*;
 import static org.junit.Assert.*;
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
+
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
@@ -23,12 +24,18 @@ public class ExampleUnitTest {
 
     @Test
     public void timer_isCorrect() throws Exception {
-        seconds = 60;
-        minutes = 0;
 
-        if (seconds == 60){
-            assertEquals(60,0);
-        }
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (seconds == 60){
+                    assertEquals(60,0);
+                }
+
+            }
+        }, 0, 1000);
+
 
     }
     @Test

@@ -26,48 +26,34 @@ import static org.junit.Assert.*;
 @RunWith(AndroidJUnit4.class)
 public class AnderNaamTest {
 
-    Button opnemenView;
-    Button stoppenView;
-    Button afspelenView;
-    Button afspelenStoppenView;
+    private Button opnemenView;
+    private Button afspelenView;
 
-    MainActivity mTestActivity;
+
+    private MainActivity mTestActivity;
 
 
     @Before
     public void setUp() throws Exception {
 
         mTestActivity = MainActivity.mainActivity;
-        opnemenView = (Button) mTestActivity.findViewById(R.id.opnemen);
-        stoppenView = (Button) mTestActivity.findViewById(R.id.stoppen);
-        afspelenView = (Button) mTestActivity.findViewById(R.id.afspelen);
-        afspelenStoppenView = (Button) mTestActivity.findViewById(R.id.stopAfspelen);
+        opnemenView = mTestActivity.findViewById(R.id.opnemen);
+        afspelenView =  mTestActivity.findViewById(R.id.afspelen);
     }
-
 
     @Test
     public void testPreconditions() {
         Assert.assertNotNull("mTestActivity is null", mTestActivity);
         Assert.assertNotNull("opnemenView is null", opnemenView);
-        Assert.assertNotNull("stoppenView is null", stoppenView);
         Assert.assertNotNull("afspelenView is null", afspelenView);
-        Assert.assertNotNull("afspelenStoppenView is null", afspelenStoppenView);
-
     }
-
     @Test
     public void Klik_True() throws Exception {
         if (opnemenView.getId() == R.id.opnemen){
             Opnemen.opnemen();
         }
-        if (stoppenView.getId() == R.id.stoppen){
-            Stoppen.OpnemenStoppen();
-        }
         if (afspelenView.getId() == R.id.afspelen){
             Afspelen.afspelen();
-        }
-        if (afspelenStoppenView.getId() == R.id.stopAfspelen){
-            Stoppen.AfspelenStoppen();
         }
     }
 }

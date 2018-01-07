@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.os.Process;
+import android.widget.TabHost;
 
 import com.audiorecorder.recorder.Adapters.PagerAdapter;
 import com.audiorecorder.recorder.R;
@@ -31,7 +32,6 @@ public class AudioActivity extends AppCompatActivity {
         return  AudioActivity.audioActivity;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +40,7 @@ public class AudioActivity extends AppCompatActivity {
         AudioActivity.audioActivity = this;
         AudioActivity.audioContext = getApplicationContext();
         LijstTonen();
+
     }
 
     @Override
@@ -74,8 +75,8 @@ public class AudioActivity extends AppCompatActivity {
             case R.id.Quit:
                 NotificationManager nm = (NotificationManager) getMainContext().getSystemService(NOTIFICATION_SERVICE);
                 nm.cancel(MainActivity.uniqueID);
-                mainActivity.finish();
-                this.finish();
+                this.finishAffinity();
+
 
 
             default:
@@ -84,11 +85,10 @@ public class AudioActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public void onBackPressed(){
-        RelativeLayout mainRelative = (RelativeLayout) findViewById(R.id.main_view);
-        RelativeLayout audioRelative = (RelativeLayout) findViewById(R.id.audio_view);
+        RelativeLayout mainRelative =  findViewById(R.id.main_view);
+        RelativeLayout audioRelative =  findViewById(R.id.audio_view);
         if(audioRelative != null && audioRelative.getVisibility() == View.VISIBLE){
             audioRelative.setVisibility(View.GONE);
             finish();
@@ -120,16 +120,12 @@ public class AudioActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
 
-
-// Wanneer switch weg doen => Dan werkt tabs, maar veranderd activity niet
                 switch (tab.getPosition()) {
                     case 0:
                         TabClick2();
-                        Log.i("MainActivity", "Main Activity clicked");
                         break;
                     case 1:
                           TabClick();
-                        Log.i("AudioActivity", "Audio Activity clicked");
                         break;
                 }
 
