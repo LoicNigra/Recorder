@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.audiorecorder.recorder.Activities.MainActivity">
+
+    <group android:checkableBehavior="single">
+    <item
+        android:id="@+id/MainMenu"
+        android:orderInCategory="1"
+        android:checkable="false"
+        android:checked="false"
+        android:title="@string/Hoofdscherm"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/FilesMenu"
+        android:checkable="false"
+        android:checked="false"
+        android:orderInCategory="2"
+        android:title="@string/Bestanden"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/Quit"
+        android:orderInCategory="3"
+        android:checkable="false"
+        android:checked="false"
+        app:showAsAction="never"
+        android:title="@string/Afsluiten" />
+</group>
+</menu>
